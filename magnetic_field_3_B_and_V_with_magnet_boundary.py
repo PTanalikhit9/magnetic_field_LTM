@@ -18,3 +18,37 @@ X, Z = np.meshgrid(x, z)
 Bx = np.zeros_like(X)
 Bz = np.zeros_like(Z)
 V = np.zeros_like(X)
+
+# Calculate the magnetic field and potential at each grid point
+for i in range(len(x)):
+    for j in range(len(z)):
+        # Distances from the corners of the magnet
+        dx1 = x[i] + length / 2
+        dz1 = z[j] + height / 2
+        dx2 = x[i] - length / 2
+        dz2 = z[j] + height / 2
+        dx3 = x[i] - length / 2
+        dz3 = z[j] - height / 2
+        dx4 = x[i] + length / 2
+        dz4 = z[j] - height / 2
+
+        # Magnetic field components
+        Bx[i, j] = magnetization * (np.arctan(dz1 * dx1 / (dx1 ** 2 + dz1 ** 2)) -
+                                    np.arctan(dz2 * dx2 / (dx2 ** 2 + dz2 ** 2)) +
+                                    np.arctan(dz3 * dx3 / (dx3 ** 2 + dz3 ** 2)) -
+                                    np.arctan(dz4 * dx4 / (dx4 ** 2 + dz4 ** 2)))
+        Bz[i, j] = magnetization * (np.arctan(dz1 / dx1) - np.arctan(dz2 / dx2) +
+                                    np.arctan(dz3 / dx3) - np.arctan(dz4 / dx4))
+
+        # Magnetic potential
+        V[i, j] = magnetization * (np.log(np.sqrt(dx1 ** 2 + dz1 ** 2)) -
+                                   np.log(np.sqrt(dx2 ** 2 + dz2 ** 2)) +
+                                   np.log(np.sqrt(dx3 ** 2 + dz3 ** 2)) -
+                                   np.log(np.sqrt(dx4 ** 2 + dz4 ** 2)))
+
+# Create the plot
+fig, ax = plt.subplots()
+
+# Plot the magnetic potential as a colormap
+c = ax.pcolormesh(X, Z, V, cmap='coolwarm', shading='auto')
+fig.colorbar(c, ax=ax, label='Magnetic Potential')
