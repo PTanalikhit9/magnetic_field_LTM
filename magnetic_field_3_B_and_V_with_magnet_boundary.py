@@ -52,3 +52,20 @@ fig, ax = plt.subplots()
 # Plot the magnetic potential as a colormap
 c = ax.pcolormesh(X, Z, V, cmap='coolwarm', shading='auto')
 fig.colorbar(c, ax=ax, label='Magnetic Potential')
+
+# Plot the magnetic field as small arrows
+# Use a stride to reduce arrow density
+stride = 2 #5
+ax.quiver(X[::stride, ::stride], Z[::stride, ::stride], Bx[::stride, ::stride], Bz[::stride, ::stride], color='k', minlength=0.05, pivot='middle', scale=20) #scale = 40 minlength = 0.1
+
+# Draw the magnet's boundary
+magnet_boundary = plt.Rectangle((-length/2, -height/2), length, height, linewidth=1, edgecolor='r', facecolor='none')
+ax.add_patch(magnet_boundary)
+
+# Set plot labels
+ax.set_xlabel('x')
+ax.set_ylabel('z')
+ax.set_title('Side View of Magnetic Field and Potential of a Rectangular Magnet')
+
+#show the plot
+plt.show()
