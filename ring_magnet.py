@@ -63,3 +63,32 @@ for i in range(len(x)):
                 np.log(np.sqrt(dx_outer ** 2 + dz_outer_south ** 2)) -
                 np.log(np.sqrt(dx_outer ** 2 + dz_outer_north ** 2))
             )
+
+# Create the plot
+fig, ax = plt.subplots()
+
+# Plot the magnetic potential as a colormap
+c = ax.pcolormesh(Z, X, V, cmap='coolwarm', shading='auto')
+fig.colorbar(c, ax=ax, label='Magnetic Potential')
+
+# Plot the magnetic field as small arrows
+# Use a stride to reduce arrow density
+stride = 2
+ax.quiver(Z[::stride, ::stride], -X[::stride, ::stride], Bz[::stride, ::stride], -Bx[::stride, ::stride], color='k', minlength=0.5, pivot='middle', scale=10)
+
+# Draw the magnet's boundary
+magnet_outer_boundary = plt.Circle((0, 0), outer_radius, linewidth=1, edgecolor='r', facecolor='none')
+magnet_inner_boundary = plt.Circle((0, 0), inner_radius, linewidth=1, edgecolor='r', facecolor='none')
+ax.add_patch(magnet_outer_boundary)
+ax.add_patch(magnet_inner_boundary)
+
+# Set plot labels
+ax.set_xlabel('x')
+ax.set_ylabel('z')
+ax.set_title('Side View of Magnetic Field and Potential of a Circular Ring Magnet')
+
+# Set aspect ratio to 'equal' to preserve the shape of the magnet
+ax.set_aspect('equal')
+
+# Show the plot
+plt.show()
