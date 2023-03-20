@@ -14,3 +14,8 @@ magnetization = 1.0
 x = np.linspace(-15, 15, 100)
 z = np.linspace(-15, 15, 100)
 X, Z = np.meshgrid(x, z)
+
+# Initialize the magnetic field and potential arrays
+Bx = np.zeros_like(X)
+Bz = np.zeros_like(Z)
+V = np.zeros_like(X)
