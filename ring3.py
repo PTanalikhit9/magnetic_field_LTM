@@ -55,3 +55,7 @@ fig, ax = plt.subplots()
 c = ax.pcolormesh(X, -Z, V, cmap='coolwarm', shading='auto')
 fig.colorbar(c, ax=ax, label='Magnetic Potential')
 
+# Plot the magnetic field as small arrows
+# Use a stride to reduce arrow density
+stride = 2
+ax.quiver(X[::stride, ::stride], Z[::stride, ::stride], Bx[::stride, ::stride], Bz[::stride, ::stride], color='k', minlength=0.5, pivot='middle', scale=10)
