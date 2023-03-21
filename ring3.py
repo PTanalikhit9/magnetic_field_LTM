@@ -59,3 +59,23 @@ fig.colorbar(c, ax=ax, label='Magnetic Potential')
 # Use a stride to reduce arrow density
 stride = 2
 ax.quiver(X[::stride, ::stride], Z[::stride, ::stride], Bx[::stride, ::stride], Bz[::stride, ::stride], color='k', minlength=0.5, pivot='middle', scale=10)
+
+# Draw the magnet's boundary
+# magnet_boundary_north = plt.Rectangle((-outer_radius, height / 2), 2 * outer_radius, outer_radius - inner_radius, linewidth=1, edgecolor='r', facecolor='none')
+# magnet_boundary_south = plt.Rectangle((-outer_radius, -height / 2 - (outer_radius - inner_radius)), 2 * outer_radius, outer_radius - inner_radius, linewidth=1, edgecolor='r', facecolor='none')
+# ax.add_patch(magnet_boundary_north)
+# ax.add_patch(magnet_boundary_south)
+
+# Draw the magnet's boundary
+magnet_boundary1 = plt.Rectangle((-outer_radius, -height / 2), (outer_radius - inner_radius), height, linewidth=1, edgecolor='k', facecolor='none')
+ax.add_patch(magnet_boundary1)
+magnet_boundary2 = plt.Rectangle((inner_radius, -height / 2), (outer_radius - inner_radius), height, linewidth=1, edgecolor='k', facecolor='none')
+ax.add_patch(magnet_boundary2)
+
+# Set plot labels
+ax.set_xlabel('z')
+ax.set_ylabel('x')
+ax.set_title('Side View of Magnetic Field and Potential of a Circular Ring Magnet')
+
+# Show the plot
+plt.show()
